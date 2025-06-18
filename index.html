@@ -1,0 +1,1145 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Discover new music with AI-powered recommendations. Search tracks, explore genres, and find your next favorite song.">
+    <meta name="keywords" content="music discovery, spotify, recommendations, music search, playlist">
+    <meta name="author" content="Music Discovery App">
+    <meta name="robots" content="index, follow">
+    
+    <!-- Open Graph / Facebook -->
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://musicdiscovery.app/">
+    <meta property="og:title" content="Music Discovery App - Find Your Next Favorite Song">
+    <meta property="og:description" content="Discover new music with AI-powered recommendations. Search tracks, explore genres, and find your next favorite song.">
+    <meta property="og:image" content="/music-og-image.jpg">
+
+    <!-- Twitter -->
+    <meta property="twitter:card" content="summary_large_image">
+    <meta property="twitter:url" content="https://musicdiscovery.app/">
+    <meta property="twitter:title" content="Music Discovery App - Find Your Next Favorite Song">
+    <meta property="twitter:description" content="Discover new music with AI-powered recommendations. Search tracks, explore genres, and find your next favorite song.">
+    <meta property="twitter:image" content="/music-og-image.jpg">
+
+    <title>Music Discovery App - Find Your Next Favorite Song</title>
+    
+    <!-- Preload critical resources -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    
+    <style>
+        /* CSS Custom Properties for theming */
+        :root {
+            --primary-color: #1DB954;
+            --primary-hover: #1ed760;
+            --secondary-color: #191414;
+            --background-dark: #0d1117;
+            --surface-dark: #161b22;
+            --surface-hover: #1c2128;
+            --text-primary: #f0f6fc;
+            --text-secondary: #8b949e;
+            --text-muted: #6e7681;
+            --border-color: #30363d;
+            --error-color: #f85149;
+            --success-color: #3fb950;
+            --gradient-primary: linear-gradient(135deg, #1DB954 0%, #1ed760 100%);
+            --gradient-dark: linear-gradient(135deg, #0d1117 0%, #161b22 100%);
+            --shadow-light: 0 1px 3px rgba(0, 0, 0, 0.1);
+            --shadow-medium: 0 4px 6px rgba(0, 0, 0, 0.1);
+            --shadow-heavy: 0 10px 25px rgba(0, 0, 0, 0.15);
+            --border-radius: 12px;
+            --transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        /* Reset and base styles */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: var(--background-dark);
+            color: var(--text-primary);
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+
+        /* Accessibility improvements */
+        .sr-only {
+            position: absolute;
+            width: 1px;
+            height: 1px;
+            padding: 0;
+            margin: -1px;
+            overflow: hidden;
+            clip: rect(0, 0, 0, 0);
+            white-space: nowrap;
+            border: 0;
+        }
+
+        /* Focus styles for accessibility */
+        *:focus {
+            outline: 2px solid var(--primary-color);
+            outline-offset: 2px;
+        }
+
+        /* Reduced motion support */
+        @media (prefers-reduced-motion: reduce) {
+            * {
+                animation-duration: 0.01ms !important;
+                animation-iteration-count: 1 !important;
+                transition-duration: 0.01ms !important;
+            }
+        }
+
+        /* Container and layout */
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        /* Header with glassmorphism effect */
+        .header {
+            background: rgba(13, 17, 23, 0.8);
+            backdrop-filter: blur(20px);
+            border-bottom: 1px solid var(--border-color);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        .header-content {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 20px 0;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--text-primary);
+            text-decoration: none;
+        }
+
+        .logo-icon {
+            width: 40px;
+            height: 40px;
+            background: var(--gradient-primary);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.2rem;
+        }
+
+        /* Hero section */
+        .hero {
+            padding: 80px 0;
+            text-align: center;
+            background: var(--gradient-dark);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: radial-gradient(circle at 30% 20%, rgba(29, 185, 84, 0.1) 0%, transparent 50%),
+                        radial-gradient(circle at 70% 80%, rgba(29, 185, 84, 0.05) 0%, transparent 50%);
+            pointer-events: none;
+        }
+
+        .hero-content {
+            position: relative;
+            z-index: 1;
+        }
+
+        .hero h1 {
+            font-size: clamp(2.5rem, 5vw, 4rem);
+            font-weight: 700;
+            margin-bottom: 20px;
+            background: linear-gradient(135deg, var(--text-primary) 0%, var(--primary-color) 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .hero p {
+            font-size: 1.25rem;
+            color: var(--text-secondary);
+            margin-bottom: 40px;
+            max-width: 600px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        /* Search section */
+        .search-section {
+            padding: 60px 0;
+        }
+
+        .search-container {
+            background: var(--surface-dark);
+            border-radius: var(--border-radius);
+            padding: 40px;
+            box-shadow: var(--shadow-heavy);
+            border: 1px solid var(--border-color);
+            backdrop-filter: blur(10px);
+        }
+
+        .search-form {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+            margin-bottom: 30px;
+        }
+
+        .input-group {
+            position: relative;
+        }
+
+        .search-input {
+            width: 100%;
+            padding: 16px 20px;
+            font-size: 1rem;
+            background: var(--background-dark);
+            border: 2px solid var(--border-color);
+            border-radius: var(--border-radius);
+            color: var(--text-primary);
+            transition: var(--transition);
+        }
+
+        .search-input:focus {
+            border-color: var(--primary-color);
+            box-shadow: 0 0 0 3px rgba(29, 185, 84, 0.1);
+        }
+
+        .search-input::placeholder {
+            color: var(--text-muted);
+        }
+
+        .button-group {
+            display: flex;
+            gap: 16px;
+            flex-wrap: wrap;
+        }
+
+        .btn {
+            padding: 14px 28px;
+            font-size: 1rem;
+            font-weight: 500;
+            border: none;
+            border-radius: var(--border-radius);
+            cursor: pointer;
+            transition: var(--transition);
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .btn::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.1), transparent);
+            transition: left 0.6s;
+        }
+
+        .btn:hover::before {
+            left: 100%;
+        }
+
+        .btn-primary {
+            background: var(--gradient-primary);
+            color: white;
+            box-shadow: var(--shadow-medium);
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: var(--shadow-heavy);
+        }
+
+        .btn-secondary {
+            background: var(--surface-hover);
+            color: var(--text-primary);
+            border: 1px solid var(--border-color);
+        }
+
+        .btn-secondary:hover {
+            background: var(--text-muted);
+            border-color: var(--primary-color);
+        }
+
+        .btn:disabled {
+            opacity: 0.6;
+            cursor: not-allowed;
+            transform: none !important;
+        }
+
+        /* Loading spinner */
+        .loading {
+            display: none;
+            justify-content: center;
+            align-items: center;
+            padding: 40px;
+        }
+
+        .spinner {
+            width: 40px;
+            height: 40px;
+            border: 3px solid var(--border-color);
+            border-top: 3px solid var(--primary-color);
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        /* Results section */
+        .results {
+            margin-top: 40px;
+        }
+
+        .results-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 24px;
+        }
+
+        .results-count {
+            color: var(--text-secondary);
+            font-size: 0.9rem;
+        }
+
+        .tracks-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 20px;
+        }
+
+        .track-card {
+            background: var(--surface-dark);
+            border-radius: var(--border-radius);
+            padding: 20px;
+            border: 1px solid var(--border-color);
+            transition: var(--transition);
+            cursor: pointer;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .track-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 3px;
+            background: var(--gradient-primary);
+            transform: scaleX(0);
+            transition: transform 0.3s ease;
+        }
+
+        .track-card:hover {
+            background: var(--surface-hover);
+            transform: translateY(-4px);
+            box-shadow: var(--shadow-heavy);
+        }
+
+        .track-card:hover::before {
+            transform: scaleX(1);
+        }
+
+        .track-info {
+            display: flex;
+            gap: 16px;
+        }
+
+        .track-image {
+            width: 80px;
+            height: 80px;
+            border-radius: 8px;
+            object-fit: cover;
+            background: var(--surface-hover);
+            flex-shrink: 0;
+        }
+
+        .track-details {
+            flex: 1;
+            min-width: 0;
+        }
+
+        .track-name {
+            font-size: 1.1rem;
+            font-weight: 600;
+            margin-bottom: 4px;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+        }
+
+        .track-artist {
+            color: var(--text-secondary);
+            margin-bottom: 4px;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+        }
+
+        .track-album {
+            color: var(--text-muted);
+            font-size: 0.9rem;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+        }
+
+        .track-actions {
+            margin-top: 16px;
+            display: flex;
+            gap: 12px;
+            align-items: center;
+        }
+
+        .audio-player {
+            width: 100%;
+            height: 32px;
+            border-radius: 16px;
+            outline: none;
+        }
+
+        .audio-player::-webkit-media-controls-panel {
+            background-color: var(--surface-hover);
+        }
+
+        /* Error and empty states */
+        .error-message {
+            background: rgba(248, 81, 73, 0.1);
+            border: 1px solid var(--error-color);
+            color: var(--error-color);
+            padding: 16px;
+            border-radius: var(--border-radius);
+            margin-top: 20px;
+            text-align: center;
+        }
+
+        .empty-state {
+            text-align: center;
+            padding: 60px 20px;
+            color: var(--text-secondary);
+        }
+
+        .empty-state-icon {
+            font-size: 4rem;
+            margin-bottom: 20px;
+            opacity: 0.5;
+        }
+
+        /* Footer */
+        .footer {
+            background: var(--surface-dark);
+            border-top: 1px solid var(--border-color);
+            padding: 40px 0;
+            margin-top: 80px;
+            text-align: center;
+        }
+
+        .footer p {
+            color: var(--text-secondary);
+            margin-bottom: 10px;
+        }
+
+        /* Responsive design */
+        @media (max-width: 768px) {
+            .container {
+                padding: 0 16px;
+            }
+
+            .hero {
+                padding: 60px 0;
+            }
+
+            .search-container {
+                padding: 24px;
+            }
+
+            .button-group {
+                flex-direction: column;
+            }
+
+            .btn {
+                justify-content: center;
+            }
+
+            .tracks-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .header-content {
+                flex-direction: column;
+                gap: 20px;
+            }
+        }
+
+        /* High contrast mode support */
+        @media (prefers-contrast: high) {
+            :root {
+                --border-color: #ffffff;
+                --text-secondary: #ffffff;
+            }
+        }
+
+        /* Preferences Section Styles */
+        .preferences-section {
+            background: var(--background-dark);
+            border-radius: var(--border-radius);
+            padding: 24px;
+            margin: 20px 0;
+            border: 1px solid var(--border-color);
+        }
+
+        .preference-group {
+            margin-bottom: 20px;
+        }
+
+        .preference-select {
+            width: 100%;
+            padding: 12px;
+            background: var(--surface-dark);
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            color: var(--text-primary);
+            font-size: 0.9rem;
+            transition: var(--transition);
+        }
+
+        .preference-select:focus {
+            border-color: var(--primary-color);
+            outline: none;
+        }
+
+        .preference-slider {
+            width: 100%;
+            height: 6px;
+            border-radius: 3px;
+            background: var(--surface-dark);
+            outline: none;
+            margin: 8px 0;
+            -webkit-appearance: none;
+        }
+
+        .preference-slider::-webkit-slider-thumb {
+            -webkit-appearance: none;
+            appearance: none;
+            width: 20px;
+            height: 20px;
+            border-radius: 50%;
+            background: var(--gradient-primary);
+            cursor: pointer;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.2);
+        }
+
+        .preference-slider::-moz-range-thumb {
+            width: 20px;
+            height: 20px;
+            border-radius: 50%;
+            background: var(--gradient-primary);
+            cursor: pointer;
+            border: none;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.2);
+        }
+
+        .slider-labels {
+            display: flex;
+            justify-content: space-between;
+            font-size: 0.8rem;
+            color: var(--text-muted);
+            margin-top: 4px;
+        }
+
+        .genre-chips {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+            margin-top: 8px;
+        }
+
+        .genre-chip {
+            padding: 8px 16px;
+            background: var(--surface-dark);
+            border: 1px solid var(--border-color);
+            border-radius: 20px;
+            color: var(--text-secondary);
+            font-size: 0.9rem;
+            cursor: pointer;
+            transition: var(--transition);
+            user-select: none;
+        }
+
+        .genre-chip:hover {
+            background: var(--surface-hover);
+            border-color: var(--primary-color);
+        }
+
+        .genre-chip.selected {
+            background: var(--gradient-primary);
+            color: white;
+            border-color: var(--primary-color);
+        }
+
+        /* Animation for track cards */
+        .track-card {
+            animation: fadeInUp 0.6s ease forwards;
+            opacity: 0;
+            transform: translateY(20px);
+        }
+
+        @keyframes fadeInUp {
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* Staggered animation for multiple cards */
+        .track-card:nth-child(1) { animation-delay: 0.1s; }
+        .track-card:nth-child(2) { animation-delay: 0.2s; }
+        .track-card:nth-child(3) { animation-delay: 0.3s; }
+        .track-card:nth-child(4) { animation-delay: 0.4s; }
+        .track-card:nth-child(5) { animation-delay: 0.5s; }
+        .track-card:nth-child(6) { animation-delay: 0.6s; }
+    </style>
+</head>
+<body>
+    <!-- Skip navigation for screen readers -->
+    <a href="#main-content" class="sr-only">Skip to main content</a>
+
+    <!-- Header -->
+    <header class="header" role="banner">
+        <div class="container">
+            <div class="header-content">
+                <a href="#" class="logo" aria-label="Music Discovery App Home">
+                    <div class="logo-icon" aria-hidden="true">🎵</div>
+                    <span>MusicFlow</span>
+                </a>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main content -->
+    <main id="main-content" role="main">
+        <!-- Hero section -->
+        <section class="hero" aria-labelledby="hero-title">
+            <div class="container">
+                <div class="hero-content">
+                    <h1 id="hero-title">Discover Your Next Favorite Song</h1>
+                    <p>Powered by AI and Spotify's vast music library, find new tracks that match your taste and explore endless musical possibilities.</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Search section -->
+        <section class="search-section" aria-labelledby="search-title">
+            <div class="container">
+                <div class="search-container">
+                    <h2 id="search-title" class="sr-only">Music Search</h2>
+                    
+                    <form class="search-form" role="search" aria-label="Search for music">
+                        <div class="input-group">
+                            <label for="searchInput" class="sr-only">Search for songs, artists, or albums</label>
+                            <input 
+                                type="text" 
+                                id="searchInput" 
+                                class="search-input"
+                                placeholder="Search for songs, artists, or albums..."
+                                autocomplete="off"
+                                spellcheck="false"
+                                aria-describedby="search-help"
+                            />
+                            <div id="search-help" class="sr-only">Enter your search query and press search or use recommendations</div>
+                        </div>
+                        
+                        <!-- User Preferences Section -->
+                        <div class="preferences-section">
+                            <h3 style="color: var(--text-primary); margin-bottom: 20px; font-size: 1.1rem;">🎯 Personalize Your Music</h3>
+                            
+                            <!-- Quick Mood Selection -->
+                            <div class="preference-group">
+                                <label for="moodSelect" style="color: var(--text-secondary); font-size: 0.9rem; margin-bottom: 8px; display: block;">Mood</label>
+                                <select id="moodSelect" class="preference-select">
+                                    <option value="">Any Mood</option>
+                                    <option value="happy">😊 Happy & Upbeat</option>
+                                    <option value="energetic">⚡ Energetic & Pumped</option>
+                                    <option value="chill">😌 Chill & Relaxed</option>
+                                    <option value="sad">😢 Sad & Melancholic</option>
+                                    <option value="focus">🎯 Focus & Study</option>
+                                </select>
+                            </div>
+                            
+                            <!-- Energy Level -->
+                            <div class="preference-group">
+                                <label for="energyRange" style="color: var(--text-secondary); font-size: 0.9rem;">Energy Level: <span id="energyValue">50%</span></label>
+                                <input type="range" id="energyRange" class="preference-slider" min="0" max="1" step="0.1" value="0.5">
+                                <div class="slider-labels">
+                                    <span>Calm</span>
+                                    <span>High Energy</span>
+                                </div>
+                            </div>
+                            
+                            <!-- Danceability -->
+                            <div class="preference-group">
+                                <label for="danceRange" style="color: var(--text-secondary); font-size: 0.9rem;">Danceability: <span id="danceValue">50%</span></label>
+                                <input type="range" id="danceRange" class="preference-slider" min="0" max="1" step="0.1" value="0.5">
+                                <div class="slider-labels">
+                                    <span>Not Danceable</span>
+                                    <span>Very Danceable</span>
+                                </div>
+                            </div>
+                            
+                            <!-- Genre Selection -->
+                            <div class="preference-group">
+                                <label style="color: var(--text-secondary); font-size: 0.9rem; margin-bottom: 8px; display: block;">Favorite Genres</label>
+                                <div class="genre-chips">
+                                    <div class="genre-chip" data-genre="pop">Pop</div>
+                                    <div class="genre-chip" data-genre="rock">Rock</div>
+                                    <div class="genre-chip" data-genre="hip-hop">Hip-Hop</div>
+                                    <div class="genre-chip" data-genre="electronic">Electronic</div>
+                                    <div class="genre-chip" data-genre="indie">Indie</div>
+                                    <div class="genre-chip" data-genre="jazz">Jazz</div>
+                                    <div class="genre-chip" data-genre="classical">Classical</div>
+                                    <div class="genre-chip" data-genre="r-n-b">R&B</div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="button-group">
+                            <button type="submit" class="btn btn-primary" onclick="searchMusic(event)" aria-describedby="search-description">
+                                🔍 Search Music
+                            </button>
+                            <button type="button" class="btn btn-secondary" onclick="getRecommendations()" aria-describedby="recommendations-description">
+                                ✨ Get Personalized Recommendations
+                            </button>
+                        </div>
+                        <div id="search-description" class="sr-only">Search for specific music tracks</div>
+                        <div id="recommendations-description" class="sr-only">Get AI-powered music recommendations based on your preferences</div>
+                    </form>
+
+                    <!-- Loading indicator -->
+                    <div class="loading" id="loading" role="status" aria-live="polite">
+                        <div class="spinner"></div>
+                        <span class="sr-only">Loading music...</span>
+                    </div>
+
+                    <!-- Results section -->
+                    <div class="results" id="results" role="region" aria-live="polite" aria-label="Search results">
+                        <div class="empty-state" id="empty-state">
+                            <div class="empty-state-icon" aria-hidden="true">🎶</div>
+                            <h3>Ready to discover amazing music?</h3>
+                            <p>Search for your favorite songs or get personalized recommendations to start exploring.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Footer -->
+    <footer class="footer" role="contentinfo">
+        <div class="container">
+            <p>&copy; 2025 MusicFlow. Built with Spotify Web API.</p>
+            <p>Discover music responsibly. Support your favorite artists.</p>
+        </div>
+    </footer>
+
+    <script>
+        // Global variables
+        let currentTracks = [];
+        let isLoading = false;
+
+        // DOM elements
+        const searchInput = document.getElementById('searchInput');
+        const loadingElement = document.getElementById('loading');
+        const resultsElement = document.getElementById('results');
+        const emptyStateElement = document.getElementById('empty-state');
+
+        // Initialize app
+        document.addEventListener('DOMContentLoaded', function() {
+            // Add enter key support for search
+            searchInput.addEventListener('keypress', function(e) {
+                if (e.key === 'Enter') {
+                    e.preventDefault();
+                    searchMusic(e);
+                }
+            });
+
+            // Initialize preference controls
+            initializePreferences();
+
+            // Preload some recommendations
+            setTimeout(() => {
+                if (currentTracks.length === 0) {
+                    getRecommendations();
+                }
+            }, 1000);
+        });
+
+        // Initialize preference controls
+        function initializePreferences() {
+            // Energy slider
+            const energyRange = document.getElementById('energyRange');
+            const energyValue = document.getElementById('energyValue');
+            energyRange.addEventListener('input', function() {
+                energyValue.textContent = Math.round(this.value * 100) + '%';
+            });
+
+            // Dance slider
+            const danceRange = document.getElementById('danceRange');
+            const danceValue = document.getElementById('danceValue');
+            danceRange.addEventListener('input', function() {
+                danceValue.textContent = Math.round(this.value * 100) + '%';
+            });
+
+            // Genre chips
+            const genreChips = document.querySelectorAll('.genre-chip');
+            genreChips.forEach(chip => {
+                chip.addEventListener('click', function() {
+                    this.classList.toggle('selected');
+                });
+            });
+
+            // Mood selector
+            const moodSelect = document.getElementById('moodSelect');
+            moodSelect.addEventListener('change', function() {
+                if (this.value) {
+                    // Auto-adjust sliders based on mood
+                    setMoodPreferences(this.value);
+                }
+            });
+        }
+
+        // Set preferences based on mood
+        function setMoodPreferences(mood) {
+            const energyRange = document.getElementById('energyRange');
+            const danceRange = document.getElementById('danceRange');
+            const energyValue = document.getElementById('energyValue');
+            const danceValue = document.getElementById('danceValue');
+
+            switch(mood) {
+                case 'happy':
+                    energyRange.value = 0.7;
+                    danceRange.value = 0.6;
+                    break;
+                case 'energetic':
+                    energyRange.value = 0.9;
+                    danceRange.value = 0.8;
+                    break;
+                case 'chill':
+                    energyRange.value = 0.3;
+                    danceRange.value = 0.4;
+                    break;
+                case 'sad':
+                    energyRange.value = 0.2;
+                    danceRange.value = 0.2;
+                    break;
+                case 'focus':
+                    energyRange.value = 0.4;
+                    danceRange.value = 0.3;
+                    break;
+            }
+
+            energyValue.textContent = Math.round(energyRange.value * 100) + '%';
+            danceValue.textContent = Math.round(danceRange.value * 100) + '%';
+        }
+
+        // Get selected genres
+        function getSelectedGenres() {
+            const selectedChips = document.querySelectorAll('.genre-chip.selected');
+            return Array.from(selectedChips).map(chip => chip.dataset.genre);
+        }
+
+        // Show applied preferences
+        function showPreferencesApplied(preferences) {
+            const existingAlert = document.querySelector('.preferences-applied');
+            if (existingAlert) existingAlert.remove();
+
+            const preferencesText = [];
+            if (preferences.target_energy) preferencesText.push(`Energy: ${Math.round(preferences.target_energy * 100)}%`);
+            if (preferences.target_danceability) preferencesText.push(`Dance: ${Math.round(preferences.target_danceability * 100)}%`);
+            if (preferences.target_valence) preferencesText.push(`Mood: ${Math.round(preferences.target_valence * 100)}%`);
+            if (preferences.seed_genres) preferencesText.push(`Genres: ${preferences.seed_genres.join(', ')}`);
+
+            if (preferencesText.length > 0) {
+                const alertDiv = document.createElement('div');
+                alertDiv.className = 'preferences-applied';
+                alertDiv.innerHTML = `<strong>🎯 Applied preferences:</strong> ${preferencesText.join(' • ')}`;
+                resultsElement.insertBefore(alertDiv, resultsElement.firstChild);
+            }
+        }
+
+        // Show loading state
+        function showLoading() {
+            if (isLoading) return;
+            isLoading = true;
+            loadingElement.style.display = 'flex';
+            emptyStateElement.style.display = 'none';
+            resultsElement.innerHTML = '';
+            
+            // Disable buttons during loading
+            const buttons = document.querySelectorAll('.btn');
+            buttons.forEach(btn => btn.disabled = true);
+        }
+
+        // Hide loading state
+        function hideLoading() {
+            isLoading = false;
+            loadingElement.style.display = 'none';
+            
+            // Re-enable buttons
+            const buttons = document.querySelectorAll('.btn');
+            buttons.forEach(btn => btn.disabled = false);
+        }
+
+        // Show error message
+        function showError(message) {
+            hideLoading();
+            resultsElement.innerHTML = `
+                <div class="error-message" role="alert">
+                    <strong>Error:</strong> ${message}
+                </div>
+            `;
+        }
+
+        // Search for music
+        async function searchMusic(event) {
+            if (event) event.preventDefault();
+            
+            const query = searchInput.value.trim();
+            if (!query) {
+                searchInput.focus();
+                return;
+            }
+
+            showLoading();
+
+            try {
+                const response = await fetch(`http://localhost:3000/api/search?q=${encodeURIComponent(query)}`);
+                
+                if (!response.ok) {
+                    throw new Error(`HTTP ${response.status}: ${response.statusText}`);
+                }
+                
+                const data = await response.json();
+                
+                if (data.tracks && data.tracks.length > 0) {
+                    currentTracks = data.tracks;
+                    displayTracks(data.tracks, `Search results for "${query}"`);
+                } else {
+                    showEmptyResults(`No results found for "${query}". Try a different search term.`);
+                }
+            } catch (error) {
+                console.error('Search error:', error);
+                showError('Failed to search for music. Please check your connection and try again.');
+            }
+        }
+
+        // Get recommendations with user preferences
+        async function getRecommendations() {
+            showLoading();
+
+            try {
+                // Get user preferences from UI
+                const mood = document.getElementById('moodSelect')?.value || '';
+                const energy = document.getElementById('energyRange')?.value || 0.5;
+                const dance = document.getElementById('danceRange')?.value || 0.5;
+                const genres = getSelectedGenres();
+                
+                // Build query parameters
+                const params = new URLSearchParams();
+                if (mood) params.append('mood', mood);
+                if (energy !== '0.5') params.append('energy_level', energy);
+                if (dance !== '0.5') params.append('dance_level', dance);
+                if (genres.length > 0) params.append('seed_genres', genres.join(','));
+                else params.append('seed_genres', 'rock,pop,hip-hop,electronic,indie');
+                
+                const response = await fetch(`http://localhost:3000/api/recommendations?${params.toString()}`);
+                
+                if (!response.ok) {
+                    throw new Error(`HTTP ${response.status}: ${response.statusText}`);
+                }
+                
+                const data = await response.json();
+                
+                if (data.recommendations && data.recommendations.length > 0) {
+                    currentTracks = data.recommendations;
+                    const title = mood ? `${mood.charAt(0).toUpperCase() + mood.slice(1)} vibes for you` : 'Recommended for you';
+                    displayTracks(data.recommendations, title);
+                    
+                    // Show applied preferences
+                    if (data.appliedPreferences) {
+                        showPreferencesApplied(data.appliedPreferences);
+                    }
+                } else {
+                    showEmptyResults('No recommendations available at the moment. Try adjusting your preferences.');
+                }
+            } catch (error) {
+                console.error('Recommendations error:', error);
+                showError('Failed to get recommendations. Please check your connection and try again.');
+            }
+        }
+
+        // Display tracks
+        function displayTracks(tracks, title) {
+            hideLoading();
+            emptyStateElement.style.display = 'none';
+            
+            const resultsHTML = `
+                <div class="results-header">
+                    <h2>${title}</h2>
+                    <span class="results-count">${tracks.length} track${tracks.length !== 1 ? 's' : ''}</span>
+                </div>
+                <div class="tracks-grid">
+                    ${tracks.map((track, index) => createTrackCard(track, index)).join('')}
+                </div>
+            `;
+            
+            resultsElement.innerHTML = resultsHTML;
+            
+            // Announce results to screen readers
+            const announcement = `Found ${tracks.length} track${tracks.length !== 1 ? 's' : ''}`;
+            announceToScreenReader(announcement);
+        }
+
+        // Create track card HTML
+        function createTrackCard(track, index) {
+            const imageUrl = track.album?.images?.[1]?.url || track.album?.images?.[0]?.url || '';
+            const artistNames = track.artists?.map(artist => artist.name).join(', ') || 'Unknown Artist';
+            const albumName = track.album?.name || 'Unknown Album';
+            const previewUrl = track.preview_url;
+            
+            return `
+                <article class="track-card" role="article" aria-labelledby="track-${index}-name">
+                    <div class="track-info">
+                        <img 
+                            src="${imageUrl}" 
+                            alt="Album cover for ${albumName}"
+                            class="track-image"
+                            loading="lazy"
+                            onerror="this.style.display='none'"
+                        />
+                        <div class="track-details">
+                            <h3 class="track-name" id="track-${index}-name">${escapeHtml(track.name)}</h3>
+                            <p class="track-artist">by ${escapeHtml(artistNames)}</p>
+                            <p class="track-album">${escapeHtml(albumName)}</p>
+                        </div>
+                    </div>
+                    ${previewUrl ? `
+                        <div class="track-actions">
+                            <audio 
+                                controls 
+                                class="audio-player"
+                                aria-label="Preview of ${track.name} by ${artistNames}"
+                                preload="none"
+                            >
+                                <source src="${previewUrl}" type="audio/mpeg">
+                                Your browser does not support the audio element.
+                            </audio>
+                        </div>
+                    ` : `
+                        <div class="track-actions">
+                            <span style="color: var(--text-muted); font-size: 0.9rem;">Preview not available</span>
+                        </div>
+                    `}
+                </article>
+            `;
+        }
+
+        // Show empty results
+        function showEmptyResults(message) {
+            hideLoading();
+            resultsElement.innerHTML = `
+                <div class="empty-state">
+                    <div class="empty-state-icon" aria-hidden="true">🔍</div>
+                    <h3>No results found</h3>
+                    <p>${message}</p>
+                </div>
+            `;
+        }
+
+        // Utility function to escape HTML
+        function escapeHtml(text) {
+            const div = document.createElement('div');
+            div.textContent = text;
+            return div.innerHTML;
+        }
+
+        // Announce to screen readers
+        function announceToScreenReader(message) {
+            const announcement = document.createElement('div');
+            announcement.setAttribute('aria-live', 'polite');
+            announcement.setAttribute('aria-atomic', 'true');
+            announcement.className = 'sr-only';
+            announcement.textContent = message;
+            document.body.appendChild(announcement);
+            
+            setTimeout(() => {
+                document.body.removeChild(announcement);
+            }, 1000);
+        }
+
+        // Performance optimization: Lazy load images
+        if ('IntersectionObserver' in window) {
+            const imageObserver = new IntersectionObserver((entries, observer) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        const img = entry.target;
+                        img.src = img.dataset.src;
+                        img.classList.remove('lazy');
+                        observer.unobserve(img);
+                    }
+                });
+            });
+
+            // This would be used if we implemented lazy loading for images
+            document.querySelectorAll('img[data-src]').forEach(img => {
+                imageObserver.observe(img);
+            });
+        }
+
+        // Service Worker registration for PWA capabilities (optional)
+        if ('serviceWorker' in navigator) {
+            window.addEventListener('load', () => {
+                // Uncomment if you create a service worker file
+                // navigator.serviceWorker.register('/sw.js');
+            });
+        }
+    </script>
+</body>
+</html>
